@@ -27,6 +27,8 @@ let g:fzf_layout = { 'window': {'width': 0.8, 'height': 0.8} }
 let $FZF_DEFAULT_COMMAND = 'fd -HL -t f -t l'
 let g:fzf_buffers_jump = 1
 
+nnoremap <leader>D :cd %:p:h<CR>
+
 nnoremap <C-p> :Files<CR>
 nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>d :Commands<CR>
