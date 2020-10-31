@@ -20,6 +20,15 @@ Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
 
 call plug#end()
 
+"Disable ex and command history modes
+nnoremap q: <Nop>
+vnoremap q: <Nop>
+nnoremap Q <Nop>
+vnoremap Q <Nop>
+
+nnoremap QQ <cmd>quitall!<CR>
+vnoremap QQ <cmd>quitall!<CR>
+
 "Turn off compatability mode
 set nocompatible
 
@@ -111,8 +120,8 @@ set backupskip=/tmp/*,/private/tmp/*
 set exrc
 set secure
 
-"Remove buffer when closed
-set nohidden
+"Hide modified buffers
+set hidden
 
 "Status line information
 set laststatus=2
