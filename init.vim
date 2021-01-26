@@ -7,16 +7,26 @@ Plug 'junegunn/fzf.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'szw/vim-maximizer'
 " Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }
 
 Plug 'airblade/vim-gitgutter'
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+Plug 'tpope/vim-commentary'
+
 " TypeScript
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-Plug 'HerringtonDarkholme/yats.vim'
+Plug 'neoclide/coc.nvim', { 'branch': 'release', 'for': ['typescript', 'javascript'] }
+Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript', 'javascript'] }
+
+" Markdown
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo'}
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
+
+" formatter
+Plug 'sbdchd/neoformat'
 
 call plug#end()
 
@@ -67,7 +77,7 @@ autocmd! User GoyoLeave call <SID>goyo_leave()
 " autocmd! User GoyoEnter Limelight
 " autocmd! User GoyoLeave Limelight!
 " autocmd BufRead,BufNewFile *.md s:goyo_enter()
-nnoremap <leader>g  :Goyo<CR>
+nnoremap <leader>gg  :Goyo<CR>
 
 nnoremap <leader>ll :Limelight!!<CR>
 
@@ -196,16 +206,21 @@ set wildignore+=*/node_modules/*,*/.git/*,*/tmp/*,*.so,*.swp,*.zip
 
 "vimwiki
 let wiki_1 = {}
-let wiki_1.path = '/mnt/data/wikis/personal'
+let wiki_1.path = '/mnt/data/homes/default/wikis/personal'
 let wiki_1.syntax = 'markdown'
 let wiki_1.ext = '.md'
 
 let wiki_2 = {}
-let wiki_2.path = '/mnt/data/wikis/development'
+let wiki_2.path = '/mnt/data/homes/default/wikis/development'
 let wiki_2.syntax = 'markdown'
 let wiki_2.ext = '.md'
 
-let g:vimwiki_list = [wiki_1, wiki_2]
+let wiki_3 = {}
+let wiki_3.path = '/mnt/data/homes/default/wikis/work'
+let wiki_3.syntax = 'markdown'
+let wiki_3.ext = '.md'
+
+let g:vimwiki_list = [wiki_1, wiki_2, wiki_3]
 
 let g:ctrlp_show_hidden = 1
 
@@ -214,105 +229,30 @@ noremap <silent> <m-j> :TmuxNavigateDown<cr>
 noremap <silent> <m-k> :TmuxNavigateUp<cr>
 noremap <silent> <m-l> :TmuxNavigateRight<cr>
 
+noremap <silent> <m-J> :res -5<cr>
+noremap <silent> <m-K> :res +5<cr>
+"noremap <silent> <m-K> :TmuxNavigateUp<cr>
+"noremap <silent> <m-L> :TmuxNavigateRight<cr>
 
-"TypeScript stuff
-" coc config
-set updatetime=300
-let g:coc_global_extensions = [
-  \ 'coc-snippets',
-  \ 'coc-pairs',
-  \ 'coc-tsserver',
-  \ 'coc-eslint',
-  \ 'coc-prettier',
-  \ 'coc-json',
-  \ ]
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
 
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
-" always show signcolumns
-set signcolumn=yes
+vnoremap <leader>p "_dP
 
-" confirm completion with Enter
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+nnoremap <leader>Y gg"+yG
 
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+tnoremap <C-n> <C-\><C-n>
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+nnoremap <leader>o :MaximizerToggle<CR>
+vnoremap <leader>o :MaximizerToggle<CR>gv
 
+nnoremap <leader>u :UndotreeToggle<CR>
+vnoremap <leader>u :UndotreeToggle<CR>gv
 
-inoremap <silent><expr> <c-space> coc#refresh()
+nnoremap <leader>gj :diffget //3<CR>
+nnoremap <leader>gf :diffget //2<CR>
+nnoremap <leader>gs :G<CR>
 
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Remap for rename current word
-nmap <leader>r <Plug>(coc-rename)
-
-" Remap for format selected region
-" xmap <leader>f  <Plug>(coc-format-selected)
-" nmap <leader>f  <Plug>(coc-format-selected)
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
-nmap <leader>f  :CocCommand prettier.formatFile<CR>
-
-" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Remap for do codeAction of current line
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
-
-" use `:OR` for organize import of current buffer
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-" Add status line support, for integration with other plugin, checkout `:h coc-status`
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-" Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Show commands
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-
+nnoremap <leader>f :Neoformat<CR>
