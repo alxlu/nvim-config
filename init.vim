@@ -257,3 +257,5 @@ nnoremap <leader>gs :G<CR>
 nnoremap <leader>gp :diffput<CR>
 
 nnoremap <leader>f :Neoformat<CR>
+
+nnoremap <leader>e :split<CR>:term<CR>i
