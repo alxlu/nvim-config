@@ -10,6 +10,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'szw/vim-maximizer'
+Plug 'puremourning/vimspector'
 " Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }
 
 Plug 'airblade/vim-gitgutter'
@@ -18,7 +19,7 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'tpope/vim-commentary'
 
 " TypeScript
-Plug 'neoclide/coc.nvim', { 'branch': 'release', 'for': ['typescript', 'javascript'] }
+Plug 'neoclide/coc.nvim', { 'branch': 'release', 'for': ['typescript', 'javascript', 'javascriptreact'] }
 Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript', 'javascript'] }
 
 " Markdown
@@ -38,6 +39,8 @@ vnoremap Q <Nop>
 
 nnoremap QQ <cmd>quitall!<CR>
 vnoremap QQ <cmd>quitall!<CR>
+nnoremap QW <cmd>quit!<CR>
+vnoremap QW <cmd>quit!<CR>
 
 "Turn off compatability mode
 set nocompatible
@@ -50,7 +53,7 @@ nnoremap <leader>D :cd %:p:h<CR>
 
 nnoremap <C-p> :Files<CR>
 nnoremap <leader>b :Buffers<CR>
-nnoremap <leader>d :Commands<CR>
+nnoremap <leader>p :Commands<CR>
 nnoremap <leader>lb :BLines<CR>
 nnoremap <leader>l :Lines<CR>
 " autocmd BufRead,BufNewFile *.md :Goyo
@@ -185,10 +188,10 @@ set path=$PWD/**
 
 "Key remaps
 nnoremap <C-Q> <C-L>
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+" nnoremap <C-J> <C-W><C-J>
+" nnoremap <C-K> <C-W><C-K>
+" nnoremap <C-L> <C-W><C-L>
+" nnoremap <C-H> <C-W><C-H>
 
 "Change split behavior
 set splitbelow
@@ -224,15 +227,17 @@ let g:vimwiki_list = [wiki_1, wiki_2, wiki_3]
 
 let g:ctrlp_show_hidden = 1
 
+let g:tmux_navigator_no_mappings = 1
 noremap <silent> <m-h> :TmuxNavigateLeft<cr>
 noremap <silent> <m-j> :TmuxNavigateDown<cr>
 noremap <silent> <m-k> :TmuxNavigateUp<cr>
 noremap <silent> <m-l> :TmuxNavigateRight<cr>
+noremap <silent> <m-\> :TmuxNavigatePrevious<cr>
 
-noremap <silent> <m-J> :res -5<cr>
-noremap <silent> <m-K> :res +5<cr>
-"noremap <silent> <m-K> :TmuxNavigateUp<cr>
-"noremap <silent> <m-L> :TmuxNavigateRight<cr>
+nnoremap <silent> <C-j> :res +5<cr>
+nnoremap <silent> <C-k> :res -5<cr>
+nnoremap <silent> <C-h> :vertical resize -5<cr>
+nnoremap <silent> <C-l> :vertical resize +5<cr>
 
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
@@ -244,6 +249,10 @@ vnoremap <leader>y "+y
 nnoremap <leader>Y gg"+yG
 
 tnoremap <C-n> <C-\><C-n>
+tnoremap <silent> <m-h> <C-\><C-n>:TmuxNavigateLeft<cr>
+tnoremap <silent> <m-j> <C-\><C-n>:TmuxNavigateDown<cr>
+tnoremap <silent> <m-k> <C-\><C-n>:TmuxNavigateUp<cr>
+tnoremap <silent> <m-l> <C-\><C-n>:TmuxNavigateRight<cr>
 
 nnoremap <leader>o :MaximizerToggle<CR>
 vnoremap <leader>o :MaximizerToggle<CR>gv
