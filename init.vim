@@ -2,12 +2,12 @@ let mapleader=" "
 
 "vim-plug
 call plug#begin('~/.config/nvim/plugged')
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'morhetz/gruvbox'
+
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
+
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'szw/vim-maximizer'
 Plug 'puremourning/vimspector'
@@ -19,8 +19,22 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'tpope/vim-commentary'
 
 " TypeScript
-Plug 'neoclide/coc.nvim', { 'branch': 'release', 'for': ['typescript', 'javascript', 'javascriptreact'] }
-Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript', 'javascript'] }
+" Plug 'neoclide/coc.nvim', { 'branch': 'release', 'for': ['typescript', 'javascript', 'javascriptreact'] }
+" Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript', 'javascript'] }
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+Plug 'glepnir/lspsaga.nvim'
+
+
+" Treesitter
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/playground'
+
+" Telescope
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
 " Markdown
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo'}
@@ -30,6 +44,10 @@ Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
 Plug 'sbdchd/neoformat'
 
 call plug#end()
+
+
+lua require'nvim-treesitter.configs'.setup { highlight = { enable = true } }
+
 
 "Disable ex and command history modes
 nnoremap q: <Nop>
@@ -45,17 +63,8 @@ vnoremap QW <cmd>quit!<CR>
 "Turn off compatability mode
 set nocompatible
 
-let g:fzf_layout = { 'window': {'width': 0.8, 'height': 0.8} }
-let $FZF_DEFAULT_COMMAND = 'fd -HL -t f -t l'
-let g:fzf_buffers_jump = 1
-
 nnoremap <leader>D :cd %:p:h<CR>
 
-nnoremap <C-p> :Files<CR>
-nnoremap <leader>b :Buffers<CR>
-nnoremap <leader>p :Commands<CR>
-nnoremap <leader>lb :BLines<CR>
-nnoremap <leader>l :Lines<CR>
 " autocmd BufRead,BufNewFile *.md :Goyo
 function! s:goyo_enter()
   let b:quitting = 0
@@ -188,10 +197,6 @@ set path=$PWD/**
 
 "Key remaps
 nnoremap <C-Q> <C-L>
-" nnoremap <C-J> <C-W><C-J>
-" nnoremap <C-K> <C-W><C-K>
-" nnoremap <C-L> <C-W><C-L>
-" nnoremap <C-H> <C-W><C-H>
 
 "Change split behavior
 set splitbelow
@@ -203,9 +208,6 @@ set wildignore+=*/node_modules/*,*/.git/*,*/tmp/*,*.so,*.swp,*.zip
 "js syntax
 ":autocmd Syntax * call SyntaxRange#Include('@begin=js@', '@end=js@', 'javascript', 'NonText')
 ":autocmd Syntax * call SyntaxRange#Include('@begin=bash@', '@end=bash@', 'sh', 'NonText')
-
-"orgmode agenda
-"let g:org_agenda_files = ['~/Dropbox/orgmode/*.org']
 
 "vimwiki
 let wiki_1 = {}
