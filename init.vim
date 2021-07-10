@@ -36,6 +36,10 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
+"FZF until https://github.com/nvim-telescope/telescope.nvim/issues/392 is fixed
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
 " Markdown
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo'}
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
@@ -43,11 +47,23 @@ Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
 " formatter
 Plug 'sbdchd/neoformat'
 
+" linting
+Plug 'dense-analysis/ale'
+
 call plug#end()
 
 
 lua require'nvim-treesitter.configs'.setup { highlight = { enable = true } }
 
+let g:fzf_layout = { 'window': {'width': 0.8, 'height': 0.8} }
+let $FZF_DEFAULT_COMMAND = 'fd -HL -t f -t l'
+let g:fzf_buffers_jump = 1
+nnoremap <leader>ps :Rg<CR>
+
+"Add local node_modules to bin
+if isdirectory($PWD .'/node_modules')
+    let $PATH .= ':' . $PWD . '/node_modules/.bin'
+endif
 
 "Disable ex and command history modes
 nnoremap q: <Nop>
@@ -57,8 +73,8 @@ vnoremap Q <Nop>
 
 nnoremap QQ <cmd>quitall!<CR>
 vnoremap QQ <cmd>quitall!<CR>
-nnoremap QW <cmd>quit!<CR>
-vnoremap QW <cmd>quit!<CR>
+nnoremap WW <cmd>quit!<CR>
+vnoremap WW <cmd>quit!<CR>
 
 "Turn off compatability mode
 set nocompatible

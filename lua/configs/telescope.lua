@@ -12,8 +12,12 @@ require('telescope').setup {
         mappings = {
             i = {
                 ["<C-x>"] = false,
-                ["<C-q>"] = actions.send_to_qflist,
+                ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
             },
+            n = {
+                ["<space>qf"] = actions.send_selected_to_qflist,
+                ["<space>qa"] = actions.send_to_qflist + actions.open_qflist,
+            }
         }
     },
     extensions = {
