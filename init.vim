@@ -53,11 +53,15 @@ Plug 'sbdchd/neoformat'
 " linting
 Plug 'dense-analysis/ale'
 
+" golang
+Plug 'fatih/vim-go'
+
 call plug#end()
 
 
 lua require'nvim-treesitter.configs'.setup { highlight = { enable = true } }
 
+let g:go_doc_popup_window = 1
 let g:fzf_layout = { 'window': {'width': 0.8, 'height': 0.8} }
 let $FZF_DEFAULT_COMMAND = 'fd -HL -t f -t l'
 let g:fzf_buffers_jump = 1

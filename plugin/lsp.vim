@@ -30,6 +30,10 @@ require'lspconfig'.tsserver.setup(coq.lsp_ensure_capabilities{
   cmd = {"/home/alex/.npm-global/bin/typescript-language-server",  "--stdio", "--tsserver-log-file=/tmp/ts-logs.txt"},
 })
 
+require'lspconfig'.gopls.setup(coq.lsp_ensure_capabilities{
+  cmd = {"/home/alex/go/bin/gopls"}
+})
+
 local sumneko_root_path = '/home/alex/.local/src/lua-language-server'
 local sumneko_binary = sumneko_root_path.."/bin/Linux/lua-language-server"
 require'lspconfig'.sumneko_lua.setup {
