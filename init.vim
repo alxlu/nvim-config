@@ -22,7 +22,10 @@ Plug 'tpope/vim-commentary'
 " Plug 'neoclide/coc.nvim', { 'branch': 'release', 'for': ['typescript', 'javascript', 'javascriptreact'] }
 " Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript', 'javascript'] }
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
+"Plug 'nvim-lua/completion-nvim'
+Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+
 Plug 'glepnir/lspsaga.nvim'
 
 

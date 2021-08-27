@@ -16,13 +16,19 @@ nnoremap gR :Lspsaga lsp_finder<CR>
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 
 lua << EOF
-local on_attach = require'completion'.on_attach 
+--local on_attach = require'completion'.on_attach 
 require'lspconfig'.vimls.setup{}
+--[[
 require'lspconfig'.tsserver.setup{ 
   --cmd = {"typescript-language-server",  "--stdio", "--tsserver-path=/ur/local/bin/tsserver", "--tsserver-log-file=/tmp/ts-logs.txt"},
   cmd = {"/home/alex/.npm-global/bin/typescript-language-server",  "--stdio", "--tsserver-log-file=/tmp/ts-logs.txt"},
   on_attach=on_attach
 }
+]]--
+local coq = require "coq"
+require'lspconfig'.tsserver.setup(coq.lsp_ensure_capabilities{
+  cmd = {"/home/alex/.npm-global/bin/typescript-language-server",  "--stdio", "--tsserver-log-file=/tmp/ts-logs.txt"},
+})
 
 local sumneko_root_path = '/home/alex/.local/src/lua-language-server'
 local sumneko_binary = sumneko_root_path.."/bin/Linux/lua-language-server"
