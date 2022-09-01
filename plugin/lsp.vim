@@ -13,6 +13,12 @@ nnoremap <leader>vn :lua vim.lsp.diagnostic.goto_next()<CR>
 nnoremap gr :Lspsaga rename<CR>
 nnoremap gR :Lspsaga lsp_finder<CR>
 
+nnoremap <leader>gk :Lspsaga show_line_diagnostics<CR>
+nnoremap gK <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
+
+nnoremap <silent><leader>ca <cmd>lua require('lspsaga.codeaction').code_action()<CR>
+vnoremap <silent><leader>ca :<C-U>lua require('lspsaga.codeaction').range_code_action()<CR>
+
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 
 lua << EOF
@@ -27,17 +33,15 @@ require'lspconfig'.tsserver.setup{
 ]]--
 local coq = require "coq"
 require'lspconfig'.tsserver.setup(coq.lsp_ensure_capabilities{
-  cmd = {"/home/alex/.npm-global/bin/typescript-language-server",  "--stdio", "--tsserver-log-file=/tmp/ts-logs.txt"},
+  cmd = {"/Users/alex/.config/nvm/versions/node/v16.13.0/bin/typescript-language-server",  "--stdio", "--tsserver-log-file=/tmp/ts-logs.txt"},
 })
 
 require'lspconfig'.gopls.setup(coq.lsp_ensure_capabilities{
-  cmd = {"/home/alex/go/bin/gopls"}
+  cmd = {"/Users/alex/go/bin/gopls"}
 })
 
-local sumneko_root_path = '/home/alex/.local/src/lua-language-server'
-local sumneko_binary = sumneko_root_path.."/bin/Linux/lua-language-server"
 require'lspconfig'.sumneko_lua.setup {
-  cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"};
+  cmd = {"lua-language-server"};
   settings = {
     Lua = {
       runtime = {
@@ -48,7 +52,7 @@ require'lspconfig'.sumneko_lua.setup {
       },
       diagnostics = {
         -- Get the language server to recognize the `vim` global
-        globals = {'vim'},
+        globals = {'vim', 'hs'},
       },
       workspace = {
         -- Make the server aware of Neovim runtime files
@@ -64,6 +68,18 @@ require'lspconfig'.sumneko_lua.setup {
 -- vim.lsp.set_log_level("debug")
 local saga = require 'lspsaga'
 saga.init_lsp_saga {
+  error_sign = '⍉',
+  warn_sign = '⍙',
+  hint_sign = '⍜',
+  infor_sign = '⍚',
+  dianostic_header_icon = '⏣ ',
+  code_action_icon = '⌾',
+  code_action_prompt = {
+    enable = false,
+    sign = false,
+    sign_priority = 0,
+    virtual_text = false,
+  },
   rename_action_keys = {
     quit = '<Esc>', exec = '<CR>'
   },
@@ -73,3 +89,4 @@ saga.init_lsp_saga {
   max_preview_lines = 30
 }
 EOF
+

@@ -3,24 +3,23 @@ let mapleader=" "
 "vim-plug
 call plug#begin('~/.config/nvim/plugged')
 Plug 'vimwiki/vimwiki'
-Plug 'morhetz/gruvbox'
+Plug 'junegunn/seoul256.vim'
+
+Plug 'github/copilot.vim'
 
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'szw/vim-maximizer'
-Plug 'puremourning/vimspector'
+" Plug 'puremourning/vimspector'
 " Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }
 
 Plug 'airblade/vim-gitgutter'
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+" Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'tpope/vim-commentary'
 
 " TypeScript
-" Plug 'neoclide/coc.nvim', { 'branch': 'release', 'for': ['typescript', 'javascript', 'javascriptreact'] }
-" Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript', 'javascript'] }
 Plug 'neovim/nvim-lspconfig'
 "Plug 'nvim-lua/completion-nvim'
 Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
@@ -31,7 +30,7 @@ Plug 'glepnir/lspsaga.nvim'
 
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/playground'
+" Plug 'nvim-treesitter/playground'
 
 " Telescope
 Plug 'nvim-lua/popup.nvim'
@@ -51,22 +50,25 @@ Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
 Plug 'sbdchd/neoformat'
 
 " linting
-Plug 'dense-analysis/ale'
+"Plug 'dense-analysis/ale'
 
 " golang
 Plug 'fatih/vim-go'
 
+" Plug 'othree/html5.vim'
+" Plug 'pangloss/vim-javascript'
+" Plug 'evanleck/vim-svelte', {'branch': 'main'}
 call plug#end()
 
 
 lua require'nvim-treesitter.configs'.setup { highlight = { enable = true } }
 
-let g:coq_settings = { 'auto_start': 'shut-up' }
+let g:coq_settings = { 'auto_start': 'shut-up', 'keymap': { 'recommended': v:true, 'jump_to_mark': '<C-Q>' }, 'display.icons.mode': 'none' }
 let g:go_doc_popup_window = 1
 let g:fzf_layout = { 'window': {'width': 0.8, 'height': 0.8} }
 let $FZF_DEFAULT_COMMAND = 'fd -HL -t f -t l'
 let g:fzf_buffers_jump = 1
-nnoremap <leader>ps :Rg<CR>
+" nnoremap <leader>ps :Rg<CR>
 
 "Add local node_modules to bin
 if isdirectory($PWD .'/node_modules')
@@ -179,9 +181,9 @@ syntax on
 set background=dark
 
 "Color scheme
-" colorscheme seoul256
+colorscheme seoul256
 " colorscheme gotham
-colorscheme gruvbox
+" colorscheme dracula
 hi Normal guibg=NONE ctermbg=NONE
 
 
@@ -233,19 +235,23 @@ set wildignore+=*/node_modules/*,*/.git/*,*/tmp/*,*.so,*.swp,*.zip
 ":autocmd Syntax * call SyntaxRange#Include('@begin=js@', '@end=js@', 'javascript', 'NonText')
 ":autocmd Syntax * call SyntaxRange#Include('@begin=bash@', '@end=bash@', 'sh', 'NonText')
 
+"possible performance fix"
+set ttyfast
+set lazyredraw
+
 "vimwiki
 let wiki_1 = {}
-let wiki_1.path = '/mnt/data/homes/default/wikis/personal'
+let wiki_1.path = '/Volumes/root/homes/default/wikis/personal'
 let wiki_1.syntax = 'markdown'
 let wiki_1.ext = '.md'
 
 let wiki_2 = {}
-let wiki_2.path = '/mnt/data/homes/default/wikis/development'
+let wiki_2.path = '/Volumes/root/homes/default/wikis/development'
 let wiki_2.syntax = 'markdown'
 let wiki_2.ext = '.md'
 
 let wiki_3 = {}
-let wiki_3.path = '/mnt/data/homes/default/wikis/work'
+let wiki_3.path = '/Volumes/root/homes/default/wikis/work'
 let wiki_3.syntax = 'markdown'
 let wiki_3.ext = '.md'
 
@@ -275,10 +281,10 @@ vnoremap <leader>y "+y
 nnoremap <leader>Y gg"+yG
 
 tnoremap <C-n> <C-\><C-n>
-tnoremap <silent> <m-h> <C-\><C-n>:TmuxNavigateLeft<cr>
-tnoremap <silent> <m-j> <C-\><C-n>:TmuxNavigateDown<cr>
-tnoremap <silent> <m-k> <C-\><C-n>:TmuxNavigateUp<cr>
-tnoremap <silent> <m-l> <C-\><C-n>:TmuxNavigateRight<cr>
+nnoremap <C-J> <C-W>w
+nnoremap <C-K> <C-W>W
+" nnoremap <C-L> <C-W><C-L>
+" nnoremap <C-H> <C-W><C-H>
 
 nnoremap <leader>o :MaximizerToggle<CR>
 vnoremap <leader>o :MaximizerToggle<CR>gv
