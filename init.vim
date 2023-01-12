@@ -21,15 +21,18 @@ Plug 'tpope/vim-commentary'
 
 " TypeScript
 Plug 'neovim/nvim-lspconfig'
+Plug 'glepnir/lspsaga.nvim', { 'branch': 'main' }
 "Plug 'nvim-lua/completion-nvim'
 Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 
-Plug 'glepnir/lspsaga.nvim'
+
 
 
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-context'
+
 " Plug 'nvim-treesitter/playground'
 
 " Telescope
@@ -60,6 +63,7 @@ Plug 'fatih/vim-go'
 " Plug 'evanleck/vim-svelte', {'branch': 'main'}
 call plug#end()
 
+lua require'treesitter-context'.setup {}
 
 lua require'nvim-treesitter.configs'.setup { highlight = { enable = true } }
 

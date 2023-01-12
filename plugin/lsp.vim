@@ -23,6 +23,8 @@ let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 
 lua << EOF
 --local on_attach = require'completion'.on_attach 
+require'treesitter-context'.setup {}
+
 require'lspconfig'.vimls.setup{}
 --[[
 require'lspconfig'.tsserver.setup{ 
@@ -65,28 +67,32 @@ require'lspconfig'.sumneko_lua.setup {
   },
 }
 
+
 -- vim.lsp.set_log_level("debug")
 local saga = require 'lspsaga'
 saga.init_lsp_saga {
-  error_sign = '⍉',
-  warn_sign = '⍙',
-  hint_sign = '⍜',
-  infor_sign = '⍚',
-  dianostic_header_icon = '⏣ ',
-  code_action_icon = '⌾',
-  code_action_prompt = {
-    enable = false,
-    sign = false,
-    sign_priority = 0,
-    virtual_text = false,
-  },
-  rename_action_keys = {
-    quit = '<Esc>', exec = '<CR>'
-  },
-  finder_action_keys = {
-    quit = '<Esc>', open = '<CR>', scroll_down = '<Down>', scroll_up = '<Up>'
-  },
+  -- error_sign = '⍉',
+  -- warn_sign = '⍙',
+  -- hint_sign = '⍜',
+  -- infor_sign = '⍚',
+  -- dianostic_header_icon = '⏣ ',
+  -- code_action_icon = '⌾',
+ -- code_action_prompt = {
+ --   enable = false,
+ --   sign = false,
+ --   sign_priority = 0,
+ --   virtual_text = false,
+ -- },
+  -- rename_action_keys = {
+  --   quit = '<Esc>', exec = '<CR>'
+  -- },
+  -- finder_action_keys = {
+  --   quit = '<Esc>', open = '<CR>', scroll_down = '<Down>', scroll_up = '<Up>'
+  -- },
   max_preview_lines = 30
 }
+
+
+
 EOF
 
